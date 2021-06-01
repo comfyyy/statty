@@ -1,14 +1,14 @@
 {
     "$schema": "https://raw.githubusercontent.com/lolPants/statty/master/assets/config.schema.json",
     "instance": {
-        "name": "dj.je Services Monitor",
-        "canonicalURL": "https://status.dj.je",
+        "name": "Infernos Host Status Page",
+        "canonicalURL": "https://status.infernoshost.xyz",
         "crontab": "*/5 * * * *",
         "evictTime": "24h",
         "delayFactor": -1,
         "alerts": {
             "webhooks": [
-                "UBER_SECRET_WEBHOOK_URL"
+                "https://discord.com/api/webhooks/849238726621134918/JmgzviiWlqbSh71CHloNxSp8h7RaegsP9Lc0SlSdLM9XAV5phdkGluXRdDNn6RBsvfqQ"
             ],
             "healthyCount": 1,
             "unhealthyCount": 1
@@ -16,44 +16,36 @@
     },
     "services": [
         {
-            "id": "Server",
-            "plugin": "ping",
-            "target": "207.244.232.210",
-            "description": "The actual VPS",
+            "id": "Main Website",
+            "plugin": "http",
+            "target": "https://infernoshost.xyz",
+            "description": "Infernos Host ",
             "latencyLimit": 100,
             "sendAlerts": true
         },
         {
-            "id": "Traefik",
+            "id": "Premium Server",
             "plugin": "http",
-            "target": "https://vps.dj.je/ping",
-            "description": "VERY IMPORTANT reverse proxy",
+            "target": "https//vinserver.iwebhostings.com",
+            "description": "Premium Server",
             "latencyLimit": 200,
             "sendAlerts": true
         },
         {
-            "id": "Nginx",
+            "id": "Free Server",
             "plugin": "http",
-            "target": "https://dj.je",
-            "description": "Primary webserver",
+            "target": "https://freehosting1.iwebhostings.com",
+            "description": "Free Server SV2",
             "latencyLimit": 300,
             "sendAlerts": true
         },
         {
-            "id": "Nextcloud",
+            "id": "Dashboard VPS",
             "plugin": "http",
-            "target": "https://nc.dj.je/status.php",
-            "description": "Nextcloud instance @ nc.dj.je",
+            "target": "https://dash.infernoshost.xyz",
+            "description": "Dashboard VPS",
             "latencyLimit": 500,
             "sendAlerts": true
         },
-        {
-            "id": "Shlink",
-            "plugin": "http",
-            "target": "https://url.dj.je/rest/health",
-            "description": "URL shortener",
-            "latencyLimit": 300,
-            "sendAlerts": true
-        }
       ]
 }
