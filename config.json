@@ -1,0 +1,59 @@
+{
+    "$schema": "https://raw.githubusercontent.com/lolPants/statty/master/assets/config.schema.json",
+    "instance": {
+        "name": "dj.je Services Monitor",
+        "canonicalURL": "https://status.dj.je",
+        "crontab": "*/5 * * * *",
+        "evictTime": "24h",
+        "delayFactor": -1,
+        "alerts": {
+            "webhooks": [
+                "UBER_SECRET_WEBHOOK_URL"
+            ],
+            "healthyCount": 1,
+            "unhealthyCount": 1
+        }
+    },
+    "services": [
+        {
+            "id": "Server",
+            "plugin": "ping",
+            "target": "207.244.232.210",
+            "description": "The actual VPS",
+            "latencyLimit": 100,
+            "sendAlerts": true
+        },
+        {
+            "id": "Traefik",
+            "plugin": "http",
+            "target": "https://vps.dj.je/ping",
+            "description": "VERY IMPORTANT reverse proxy",
+            "latencyLimit": 200,
+            "sendAlerts": true
+        },
+        {
+            "id": "Nginx",
+            "plugin": "http",
+            "target": "https://dj.je",
+            "description": "Primary webserver",
+            "latencyLimit": 300,
+            "sendAlerts": true
+        },
+        {
+            "id": "Nextcloud",
+            "plugin": "http",
+            "target": "https://nc.dj.je/status.php",
+            "description": "Nextcloud instance @ nc.dj.je",
+            "latencyLimit": 500,
+            "sendAlerts": true
+        },
+        {
+            "id": "Shlink",
+            "plugin": "http",
+            "target": "https://url.dj.je/rest/health",
+            "description": "URL shortener",
+            "latencyLimit": 300,
+            "sendAlerts": true
+        }
+      ]
+}

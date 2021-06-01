@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/lolPants/statty/master/assets/config.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "instance",
+    "services"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri"
+    },
+    "instance": {
+      "$id": "#/properties/instance",
+      "type": "object",
+      "additionalProperties": false,
+      "title": "Instance Configuration",
+      "required": [
+        "name"
+      ],
+      "dependencies": {
+        "alerts": ["canonicalURL"]
+      },
+      "properties": {
+        "name": {
+          "$id": "#/properties/instance/properties/name",
+          "type": "string",
+          "title": "Instance Name",
+          "description": "Used on the dashboard.",
+          "pattern": "^(.+)$"
+        },
+        "canonicalURL": {
+          "$id": "#/properties/instance/properties/canonicalURL",
+          "type": "string",
+          "format": "uri",
+          "description": "Used in links sent via alerts."
+        },
+        "crontab": {
+          "$id": "#/properties/instance/properties/crontab",
+          "type": "string",
+          "description": "Crontab used to run plugins with. Can have a 6th entry for second-precision.",
+          "examples": [
+            "* * * * *"
+          ]
+        },
+        "evictTime": {
+          "$id": "#/properties/instance/properties/evictTime",
+          "type": "string",
+          "description": "Time after which old datapoints get evicted.\nDefaults to \"61m\".",
+          "examples": [
+            "1h",
+            "2h",
+            "30m"
+          ]
+        },
+        "delayFactor": {
+          "$id": "#/properties/instance/properties/delayFactor",
+          "type": "number",
+          "minimum": -1,
+          "description": "Add sequential delay to plugin runs (in seconds).\nDefaults to \"2\".\nSet to \"-1\" to disable."
+        },
+        "alerts": {
+          "$id": "#/properties/instance/properties/alerts",
+          "$ref": "#/definitions/alerts"
+        }
+      }
+    },
+    "services": {
+      "$id": "#/properties/services",
+      "type": "array",
+      "title": "Service Defintions",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/service"
+      }
+    }
+  },
+  "definitions": {
+    "service": {
+      "$id": "#/definitions/service",
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "plugin",
+        "target"
+      ],
+      "properties": {
+        "id": {
+          "$id": "#/definitions/service/properties/id",
+          "type": "string",
+          "title": "Service ID",
+          "description": "Unique identifier for this service. Shown as the title on the dashboard."
+        },
+        "plugin": {
+          "$id": "#/definitions/service/properties/plugin",
+          "type": "string",
+          "title": "Plugin ID",
+          "examples": [
+            "http",
+            "ping"
+          ],
+          "pattern": "^(.+)$"
+        },
+        "target": {
+          "$id": "#/definitions/service/properties/target",
+          "type": "string",
+          "pattern": "^(.+)$"
+        },
+        "description": {
+          "$id": "#/definitions/service/properties/description",
+          "type": "string",
+          "title": "Optional Description",
+          "description": "Shown on the dashboard. If unset, the plugin will resolve a sensible fallback.",
+          "pattern": "^(.+)$"
+        },
+        "latencyLimit": {
+          "$id": "#/definitions/service/properties/latencyLimit",
+          "type": "number",
+          "minimum": 1,
+          "description": "Upper limit for latency (in milliseconds) for \"good\" performance.\nValues exceeding this limit will show as having Degraded Performance."
+        },
+        "sendAlerts": {
+          "$id": "#/definitions/service/properties/sendAlerts",
+          "type": "boolean",
+          "default": true,
+          "description": "Send alerts to all webhooks.\nDefaults to `true` if unset."
+        }
+      }
+    },
+    "alerts": {
+      "$id": "#/definitions/alerts",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "webhooks"
+      ],
+      "properties": {
+        "webhooks": {
+          "$id": "#/definitions/alerts/properties/webhook",
+          "type": "array",
+          "title": "Webhook URL",
+          "description": "Array of Slack Compatible webhook URLs",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "unhealthyCount": {
+          "$id": "#/definitions/alerts/properties/unhealthyCount",
+          "type": "number",
+          "description": "Number of unhealthy readings taken before sending an alert.",
+          "default": 2,
+          "minimum": 1
+        },
+        "healthyCount": {
+          "$id": "#/definitions/alerts/properties/healthyCount",
+          "type": "number",
+          "description": "Number of healthy readings taken before sending an all clear.",
+          "default": 2,
+          "minimum": 1
+        }
+      }
+    }
+  }
+}
