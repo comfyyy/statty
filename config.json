@@ -46,6 +46,6 @@
             "description": "Dashboard VPS",
             "latencyLimit": 500,
             "sendAlerts": true
-        },
+        }
       ]
 }
