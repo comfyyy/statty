@@ -20,7 +20,7 @@
             "plugin": "http",
             "target": "https://infernoshost.xyz",
             "description": "Infernos Host ",
-            "latencyLimit": 100,
+            "latencyLimit": 1000,
             "sendAlerts": true
         },
         {
@@ -28,7 +28,7 @@
             "plugin": "http",
             "target": "https//vinserver.iwebhostings.com",
             "description": "Premium Server",
-            "latencyLimit": 200,
+            "latencyLimit": 1000,
             "sendAlerts": true
         },
         {
@@ -36,7 +36,7 @@
             "plugin": "http",
             "target": "https://freehosting1.iwebhostings.com",
             "description": "Free Server SV2",
-            "latencyLimit": 300,
+            "latencyLimit": 1000,
             "sendAlerts": true
         },
         {
@@ -44,7 +44,7 @@
             "plugin": "http",
             "target": "https://dash.infernoshost.xyz",
             "description": "Dashboard VPS",
-            "latencyLimit": 500,
+            "latencyLimit": 1000,
             "sendAlerts": true
         }
       ]
