@@ -25,8 +25,8 @@
         },
         {
             "id": "Premium Server",
-            "plugin": "http",
-            "target": "https//vinserver.iwebhostings.com",
+            "plugin": "ping",
+            "target": "89.163.215.190",
             "description": "Premium Server",
             "latencyLimit": 1000,
             "sendAlerts": true
